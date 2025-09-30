@@ -31,8 +31,11 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                bat 'docker stop euraka || true && docker rm euraka || true'
-                bat 'docker run -d -p 8761:8761 --name euraka euraka'
+                bat '''
+                    docker stop euraka || exit 0
+                    docker rm euraka || exit 0
+                    docker run -d -p 8081:8081 --name euraka euraka
+                '''
             }
         }
     }
